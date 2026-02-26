@@ -1,0 +1,29 @@
+﻿version: '3.9'
+
+services:
+  postgres:
+    image: postgres:18
+    container_name: postgres_movies_db
+    # For sure we don't want to this on production
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: postgres_movies_db
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d postgres_movies_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  api:
+    build: ./MoviesAPI/Movies
+    container_name: movie_api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=postgres_movies_db;Username=root;Password=123
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5001:8080"

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Movies.Data;
+using Movies.DTOs;
 using Movies.Models;
 
 namespace Movies.Controllers
@@ -26,7 +27,18 @@ namespace Movies.Controllers
                 .Where(movie => string.IsNullOrWhiteSpace(title) || movie.Title.Contains(title))
                 .Where(movie => string.IsNullOrWhiteSpace(genre) || movie.Genre.Contains(genre))
                 .Where(movie => string.IsNullOrWhiteSpace(actor) || movie.Actors.Any(act => act.Name.Contains(actor)))
-                .Include(movie => movie.Actors)
+                .Select(movie => new MovieDto
+                {
+                    Id = movie.Id,  
+                    Title = movie.Title,
+                    Genre = movie.Genre,
+                    Year = movie.Year,
+                    Actors = movie.Actors.Select(actor => new ActorDto
+                    {
+                        Id = actor.Id,
+                        Name = actor.Name
+                    }).ToList()
+                })
                 .ToListAsync();
             
             return Ok(result);

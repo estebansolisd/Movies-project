@@ -1,0 +1,1 @@
+export const GENRE = ["Action", "Drama", "Comedy", "Sci-Fi", "Horror"];

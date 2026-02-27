@@ -22,13 +22,25 @@ namespace Movies.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ActorMovie", b =>
+                {
+                    b.Property<Guid>("ActorsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("MoviesId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ActorsId", "MoviesId");
+
+                    b.HasIndex("MoviesId");
+
+                    b.ToTable("ActorMovie");
+                });
+
             modelBuilder.Entity("Movies.Models.Actor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("MovieId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -36,8 +48,6 @@ namespace Movies.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
 
                     b.HasIndex("Name");
 
@@ -72,16 +82,19 @@ namespace Movies.Migrations
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("Movies.Models.Actor", b =>
+            modelBuilder.Entity("ActorMovie", b =>
                 {
-                    b.HasOne("Movies.Models.Movie", null)
-                        .WithMany("Actors")
-                        .HasForeignKey("MovieId");
-                });
+                    b.HasOne("Movies.Models.Actor", null)
+                        .WithMany()
+                        .HasForeignKey("ActorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("Movies.Models.Movie", b =>
-                {
-                    b.Navigation("Actors");
+                    b.HasOne("Movies.Models.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MoviesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

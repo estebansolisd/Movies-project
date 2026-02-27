@@ -18,6 +18,12 @@ import { fetchMovies } from "@/features/moviesSlice";
 import store, { StateType } from "@/store";
 import { useSelector } from "react-redux";
 import { GENRE } from "./constants";
+// To accomplish the requirements
+import styled from "styled-components";
+
+const Container = styled.div`
+  flexGrow: 1
+`
 
 const App: React.FC = () => {
   const [search, setSearch] = useState({
@@ -39,7 +45,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Container>
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 4 }}>
           <TextField
@@ -128,7 +134,7 @@ const App: React.FC = () => {
           </Grid>
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   );
 };
 

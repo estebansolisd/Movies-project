@@ -33,6 +33,7 @@ namespace Movies.Controllers
                     Title = movie.Title,
                     Genre = movie.Genre,
                     Year = movie.Year,
+                    ImageUrl = movie.ImageUrl,
                     Actors = movie.Actors.Select(actor => new ActorDto
                     {
                         Id = actor.Id,

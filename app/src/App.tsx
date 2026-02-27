@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CardMedia,
   FormControl,
   Grid,
   InputLabel,
@@ -105,8 +106,9 @@ const App: React.FC = () => {
           <Grid container spacing={2}>
             {movies.map((movie) => (
               <Grid size={{ xs: 12, md: 3 }} key={movie.id}>
-                <Card sx={{ height: 200 }}>
+                <Card sx={{ height: 400 }}>
                   <CardHeader title={movie.title} />
+                  <CardMedia image={movie.imageUrl} height="200" alt={movie.title} component="img" sx={{ objectFit: "cover"}} />
                   <CardContent>
                     <Typography
                       variant="body1"

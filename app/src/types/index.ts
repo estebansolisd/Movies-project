@@ -8,6 +8,7 @@ export interface Movie {
     title: string;
     genre: string;
     year: number;
+    imageUrl: string;
     actors: Actor[];
 }
 

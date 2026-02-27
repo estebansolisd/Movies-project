@@ -17,5 +17,7 @@ public class Movie
     
     public int Year { get; set; }
     
+    public string ImageUrl { get; set; } = String.Empty;
+    
     public ICollection<Actor> Actors { get; set; } = new List<Actor>();
 }   

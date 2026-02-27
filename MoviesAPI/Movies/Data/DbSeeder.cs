@@ -19,6 +19,7 @@ public static class DbSeeder
             .RuleFor(movie => movie.Title, f => string.Join(" ", f.Lorem.Words()))
             .RuleFor(movie => movie.Genre, f => f.PickRandom(new[] { "Action", "Drama", "Comedy", "Sci-Fi", "Horror" }))
             .RuleFor(movie => movie.Year,  f => f.Random.Int(1980, 2026))
+            .RuleFor(movie => movie.ImageUrl, f => f.Image.PicsumUrl(300, 400))
             .RuleFor(movie => movie.Actors, f => 
             {
                 var randomActorPerMovie = f.Random.Int(1, 5);
